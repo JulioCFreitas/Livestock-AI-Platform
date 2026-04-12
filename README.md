@@ -80,17 +80,6 @@ O sistema segue os princípios de:
 - Domain-Driven Design (DDD)
 - Arquitetura orientada a eventos
 
-livestock-ai/
-├── domain
-├── application
-├── adapters
-│   ├── web
-│   ├── persistence
-│   ├── kafka
-│   ├── ai
-├── config
-
-
 ---
 
 ## 🧱 Stack Tecnológica
