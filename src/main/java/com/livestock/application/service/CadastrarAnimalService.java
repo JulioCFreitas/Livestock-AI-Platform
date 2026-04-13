@@ -1,31 +1,63 @@
 package com.livestock.application.service;
 
+import com.livestock.adapters.in.web.dto.AnimalRequest;
+import com.livestock.adapters.out.mapper.AnimalMapper;
 import com.livestock.application.ports.AnimalRepository;
-import com.livestock.application.usecase.CadastrarAnimalCommand;
 import com.livestock.application.usecase.CadastrarAnimalUseCase;
 import com.livestock.domain.model.Animal;
+import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.List;
 
+@Service
 public class CadastrarAnimalService implements CadastrarAnimalUseCase {
 
     private final AnimalRepository repository;
+    private final AnimalMapper mapper;
 
-    public CadastrarAnimalService(AnimalRepository repository) {
+
+    public CadastrarAnimalService(AnimalRepository repository, AnimalMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     @Override
-    public Animal executar(CadastrarAnimalCommand command) {
-        Animal animal = new Animal(
-                UUID.randomUUID(),
-                command.identificacao(),
-                command.tipo(),
-                command.raca(),
-                command.peso(),
-                command.dataNascimento()
-        );
+    public Animal cadastrar(AnimalRequest request) {
 
-        return repository.salvar(animal);
+        if (repository.existsByIdentificacao(request.identificacao())) {
+            throw new RuntimeException("Animal já existe");
+        }
+
+        Animal animal = mapper.toDomain(request);
+
+        return repository.save(animal);
+    }
+
+    @Override
+    public List<Animal> listar() {
+        return repository.findAll();
+    }
+
+    @Override
+    public Animal buscar(String id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Animal não encontrado"));
+    }
+
+    @Override
+    public Animal atualizar(String id, AnimalRequest request) {
+
+        Animal existente = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Animal não encontrado"));
+
+        mapper.updateAnimalFromRequest(request, existente);
+
+        return repository.save(existente);
+    }
+
+    @Override
+    public void deletar(String id) {
+        repository.deleteById(id);
     }
 }
+
