@@ -1,5 +1,7 @@
 package com.livestock.application.usecase;
 
+import com.livestock.domain.model.Animal;
+
 public interface CadastrarAnimalUseCase {
-    void executar(CadastrarAnimalCommand command);
+    Animal executar(CadastrarAnimalCommand command);
 }

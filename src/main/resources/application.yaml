@@ -1,6 +1,6 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://admin:<db_password>@cluster0.aafzy3s.mongodb.net/?appName=Cluster0
+      uri: mongodb://localhost:27017/livestock
 server:
   port: 8080

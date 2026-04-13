@@ -16,7 +16,7 @@ public class CadastrarAnimalService implements CadastrarAnimalUseCase {
     }
 
     @Override
-    public void executar(CadastrarAnimalCommand command) {
+    public Animal executar(CadastrarAnimalCommand command) {
         Animal animal = new Animal(
                 UUID.randomUUID(),
                 command.identificacao(),
@@ -26,6 +26,6 @@ public class CadastrarAnimalService implements CadastrarAnimalUseCase {
                 command.dataNascimento()
         );
 
-        repository.salvar(animal);
+        return repository.salvar(animal);
     }
 }
