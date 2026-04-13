@@ -13,17 +13,18 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface AnimalMapper {
 
     // Request → Domain
-    Animal toDomain(AnimalRequest request);
+    Animal toDomainFromRequest(AnimalRequest request);
 
     // Domain → Response
     AnimalResponse toResponse(Animal animal);
 
-    // Document ↔ Domain
-    Animal toDomain(AnimalDocument document);
+    // Document → Domain
+    Animal toDomainFromDocument(AnimalDocument document);
 
+    // Domain → Document
     AnimalDocument toDocument(Animal animal);
 
-    // NOVO: update parcial
+    // Update parcial
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateAnimalFromRequest(AnimalRequest request, @MappingTarget Animal animal);
 }

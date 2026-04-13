@@ -28,7 +28,7 @@ public class CadastrarAnimalService implements CadastrarAnimalUseCase {
             throw new RuntimeException("Animal já existe");
         }
 
-        Animal animal = mapper.toDomain(request);
+        Animal animal = mapper.toDomainFromRequest(request);
 
         return repository.save(animal);
     }
@@ -41,14 +41,14 @@ public class CadastrarAnimalService implements CadastrarAnimalUseCase {
     @Override
     public Animal buscar(String id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Animal não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Animal não encontrado para busca."));
     }
 
     @Override
     public Animal atualizar(String id, AnimalRequest request) {
 
         Animal existente = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Animal não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Animal não encontrado para atualizar."));
 
         mapper.updateAnimalFromRequest(request, existente);
 

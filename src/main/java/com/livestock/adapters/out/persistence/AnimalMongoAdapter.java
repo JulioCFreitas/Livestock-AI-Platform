@@ -22,25 +22,26 @@ public class AnimalMongoAdapter implements AnimalRepository {
     @Override
     public Animal save(Animal animal) {
         AnimalDocument doc = mapper.toDocument(animal);
-        return mapper.toDomain(repository.save(doc));
+        return mapper.toDomainFromDocument(repository.save(doc));
     }
 
     @Override
     public List<Animal> findAll() {
         return repository.findAll()
                 .stream()
-                .map(mapper::toDomain)
+                .map(mapper::toDomainFromDocument)
                 .toList();
     }
 
     @Override
     public Optional<Animal> findById(String id) {
-        return Optional.empty();
+        return repository.findById(id)
+                .map(mapper::toDomainFromDocument);
     }
 
     @Override
     public void deleteById(String id) {
-
+        repository.deleteById(id);
     }
 
     @Override

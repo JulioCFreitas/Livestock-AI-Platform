@@ -3,6 +3,7 @@ package com.livestock.adapters.in.web;
 import com.livestock.adapters.in.web.dto.AnimalRequest;
 import com.livestock.adapters.in.web.dto.AnimalResponse;
 import com.livestock.adapters.out.mapper.AnimalMapper;
+import com.livestock.application.ports.AnimalRepository;
 import com.livestock.application.usecase.CadastrarAnimalUseCase;
 import com.livestock.domain.model.Animal;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,13 @@ public class AnimalController {
 
     private final CadastrarAnimalUseCase useCase;
     private final AnimalMapper mapper;
+    private final AnimalRepository repository;
 
-    public AnimalController(CadastrarAnimalUseCase useCase, AnimalMapper mapper) {
+    public AnimalController(CadastrarAnimalUseCase useCase, AnimalMapper mapper
+    ,AnimalRepository repository) {
         this.useCase = useCase;
         this.mapper = mapper;
+        this.repository = repository;
     }
 
     @PostMapping
@@ -62,5 +66,10 @@ public class AnimalController {
     public ResponseEntity<Void> deletar(@PathVariable String id) {
         useCase.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/debug")
+    public List<Animal> debug() {
+        return repository.findAll();
     }
 }

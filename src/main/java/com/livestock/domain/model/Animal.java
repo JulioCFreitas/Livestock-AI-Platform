@@ -7,14 +7,14 @@ import java.util.UUID;
 
 public class Animal {
 
-    private UUID id;
+    private String id;
     private String identificacao;
     private TipoGado tipo;
     private String raca;
     private double peso;
     private LocalDate dataNascimento;
 
-    public Animal(UUID id, String identificacao, TipoGado tipo, String raca, double peso, LocalDate dataNascimento) {
+    public Animal(String id, String identificacao, TipoGado tipo, String raca, double peso, LocalDate dataNascimento) {
         this.id = id;
         this.identificacao = identificacao;
         this.tipo = tipo;
@@ -27,11 +27,11 @@ public class Animal {
         return tipo == TipoGado.CORTE && peso >= 450;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
