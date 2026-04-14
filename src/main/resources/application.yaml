@@ -1,8 +1,43 @@
 spring:
+  # MongoDB
   data:
     mongodb:
       host: localhost
       port: 27017
       database: livestock
+
+  # Kafka
+  kafka:
+    bootstrap-servers: localhost:9092
+
+    consumer:
+      group-id: agro-group
+      auto-offset-reset: earliest
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+  #ZOOKEPPER - KAFKA
+  version: '3'
+  services:
+    zookeeper:
+      image: confluentinc/cp-zookeeper:latest
+      environment:
+        ZOOKEEPER_CLIENT_PORT: 2181
+
+    kafka:
+      image: confluentinc/cp-kafka:latest
+      ports:
+        - "9092:9092"
+      environment:
+        KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+        KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
 server:
   port: 8080
+
