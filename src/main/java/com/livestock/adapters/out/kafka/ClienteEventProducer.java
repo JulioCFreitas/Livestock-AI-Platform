@@ -14,6 +14,7 @@ public class ClienteEventProducer {
     }
 
     public void enviarEvento(ClienteCadastradoEvent event) {
-        KafkaTemplate.send("Cliente-cadatrado");
+        kafkaTemplate.send("cliente-cadastrado", event);
+        System.out.println("Evento enviado: " + event);
     }
 }
