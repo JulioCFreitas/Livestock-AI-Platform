@@ -39,7 +39,9 @@ public class CadastrarAnimalService implements CadastrarAnimalUseCase {
         animalEventProducer.enviarEvento(
                 new AnimalCadastradoEvent(
                         animalSalvo.getId(),
-                        animalSalvo.getIdentificacao()
+                        animalSalvo.getIdentificacao(),
+                        animalSalvo.getTipo(),
+                        animal.getPeso()
                 )
         );
 

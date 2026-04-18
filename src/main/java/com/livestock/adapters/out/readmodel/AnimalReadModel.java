@@ -1,29 +1,34 @@
-package com.livestock.domain.event;
+package com.livestock.adapters.out.readmodel;
 
 import com.livestock.domain.enums.TipoGado;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-public class AnimalCadastradoEvent {
+@Document("animal_read_model")
+public class AnimalReadModel {
 
-    private String animalId;
+    @Id
+    private String id;
+
     private String identificacao;
     private TipoGado tipo;
     private Double peso;
 
-    public AnimalCadastradoEvent() {}
+    public AnimalReadModel() {}
 
-    public AnimalCadastradoEvent(String animalId, String identificacao, TipoGado tipo, Double peso) {
-        this.animalId = animalId;
+    public AnimalReadModel(String id, String identificacao,TipoGado tipo, Double peso) {
+        this.id = id;
         this.identificacao = identificacao;
         this.tipo = tipo;
         this.peso = peso;
     }
 
-    public String getAnimalId() {
-        return animalId;
+    public String getId() {
+        return id;
     }
 
-    public void setAnimalId(String animalId) {
-        this.animalId = animalId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getIdentificacao() {
@@ -50,4 +55,3 @@ public class AnimalCadastradoEvent {
         this.peso = peso;
     }
 }
-
