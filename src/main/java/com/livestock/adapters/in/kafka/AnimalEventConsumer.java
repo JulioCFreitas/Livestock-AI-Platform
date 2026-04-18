@@ -1,22 +1,21 @@
 package com.livestock.adapters.in.kafka;
 
-import com.livestock.domain.event.ClienteCadastradoEvent;
+import com.livestock.domain.event.AnimalCadastradoEvent;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ClienteEventConsumer {
+public class AnimalEventConsumer {
 
     @KafkaListener(
-            topics = "cliente-cadastrado",
+            topics = "animal-cadastrado",
             groupId = "agro-group"
     )
-    public void consumir(ClienteCadastradoEvent event) {
+    public void consumir(AnimalCadastradoEvent event) {
 
         System.out.println("====================================");
-        System.out.println("Evento recebido do Kafka");
-        System.out.println("Nome: " + event.getNome());
+        System.out.println("Evento de animal recebido");
+        System.out.println("Identificação: " + event.getIdentificacao());
         System.out.println("====================================");
-
     }
 }

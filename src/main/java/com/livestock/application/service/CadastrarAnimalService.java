@@ -1,9 +1,11 @@
 package com.livestock.application.service;
 
 import com.livestock.adapters.in.web.dto.AnimalRequest;
+import com.livestock.adapters.out.kafka.AnimalEventProducer;
 import com.livestock.adapters.out.mapper.AnimalMapper;
 import com.livestock.application.ports.AnimalRepository;
 import com.livestock.application.usecase.CadastrarAnimalUseCase;
+import com.livestock.domain.event.AnimalCadastradoEvent;
 import com.livestock.domain.model.Animal;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +16,14 @@ public class CadastrarAnimalService implements CadastrarAnimalUseCase {
 
     private final AnimalRepository repository;
     private final AnimalMapper mapper;
+    private final AnimalEventProducer animalEventProducer;
 
 
-    public CadastrarAnimalService(AnimalRepository repository, AnimalMapper mapper) {
+    public CadastrarAnimalService(AnimalRepository repository, AnimalMapper mapper
+    , AnimalEventProducer animalEventProducer) {
         this.repository = repository;
         this.mapper = mapper;
+        this.animalEventProducer = animalEventProducer;
     }
 
     @Override
@@ -29,8 +34,16 @@ public class CadastrarAnimalService implements CadastrarAnimalUseCase {
         }
 
         Animal animal = mapper.toDomainFromRequest(request);
+        Animal animalSalvo = repository.save(animal);
 
-        return repository.save(animal);
+        animalEventProducer.enviarEvento(
+                new AnimalCadastradoEvent(
+                        animalSalvo.getId(),
+                        animalSalvo.getIdentificacao()
+                )
+        );
+
+        return animalSalvo;
     }
 
     @Override
