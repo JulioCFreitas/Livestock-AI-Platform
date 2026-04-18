@@ -18,13 +18,12 @@ public interface AnimalMapper {
     // Domain → Response
     AnimalResponse toResponse(Animal animal);
 
-    // Document → Domain
-    Animal toDomainFromDocument(AnimalDocument document);
-
     // Domain → Document
     AnimalDocument toDocument(Animal animal);
 
-    // Update parcial
+    // Document → Domain
+    Animal toDomainFromDocument(AnimalDocument document);
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateAnimalFromRequest(AnimalRequest request, @MappingTarget Animal animal);
 }

@@ -1,5 +1,6 @@
 package com.livestock.adapters.out.persistence;
 
+import com.livestock.adapters.in.web.dto.AnimalResponse;
 import com.livestock.adapters.out.mapper.AnimalMapper;
 import com.livestock.application.ports.AnimalRepository;
 import com.livestock.domain.model.Animal;
@@ -21,8 +22,9 @@ public class AnimalMongoAdapter implements AnimalRepository {
 
     @Override
     public Animal save(Animal animal) {
-        AnimalDocument doc = mapper.toDocument(animal);
-        return mapper.toDomainFromDocument(repository.save(doc));
+        AnimalDocument animalDocument = mapper.toDocument(animal);
+        AnimalDocument animalSaved =  repository.save(animalDocument);
+        return mapper.toDomainFromDocument(animalSaved);
     }
 
     @Override

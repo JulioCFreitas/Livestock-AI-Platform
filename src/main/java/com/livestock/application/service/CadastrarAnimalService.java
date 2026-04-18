@@ -1,6 +1,7 @@
 package com.livestock.application.service;
 
 import com.livestock.adapters.in.web.dto.AnimalRequest;
+import com.livestock.adapters.in.web.dto.AnimalResponse;
 import com.livestock.adapters.out.kafka.AnimalEventProducer;
 import com.livestock.adapters.out.mapper.AnimalMapper;
 import com.livestock.application.ports.AnimalRepository;
@@ -27,7 +28,7 @@ public class CadastrarAnimalService implements CadastrarAnimalUseCase {
     }
 
     @Override
-    public Animal cadastrar(AnimalRequest request) {
+    public AnimalResponse cadastrar(AnimalRequest request) {
 
         if (repository.existsByIdentificacao(request.identificacao())) {
             throw new RuntimeException("Animal já existe");
@@ -41,33 +42,42 @@ public class CadastrarAnimalService implements CadastrarAnimalUseCase {
                         animalSalvo.getId(),
                         animalSalvo.getIdentificacao(),
                         animalSalvo.getTipo(),
-                        animal.getPeso()
+                        animal.getPeso(),
+                        animal.getDataNascimento()
                 )
         );
 
-        return animalSalvo;
+        return mapper.toResponse(animalSalvo);
     }
 
     @Override
-    public List<Animal> listar() {
-        return repository.findAll();
+    public List<AnimalResponse> listar() {
+        return repository.findAll()
+                .stream()
+                .map(mapper::toResponse)
+                .toList();
     }
 
     @Override
-    public Animal buscar(String id) {
-        return repository.findById(id)
+    public AnimalResponse buscar(String id) {
+
+        Animal animal = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Animal não encontrado para busca."));
+
+        return mapper.toResponse(animal);
     }
 
     @Override
-    public Animal atualizar(String id, AnimalRequest request) {
+    public AnimalResponse atualizar(String id, AnimalRequest request) {
 
         Animal existente = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Animal não encontrado para atualizar."));
 
         mapper.updateAnimalFromRequest(request, existente);
 
-        return repository.save(existente);
+        Animal animalAtualizado = repository.save(existente);
+
+        return mapper.toResponse(animalAtualizado);
     }
 
     @Override

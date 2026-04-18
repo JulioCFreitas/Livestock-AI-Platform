@@ -3,6 +3,8 @@ package com.livestock.adapters.out.persistence;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+
 @Document(collection = "animais")
 public class AnimalDocument {
 
@@ -12,6 +14,7 @@ public class AnimalDocument {
     private String tipo;
     private String raca;
     private double peso;
+    private LocalDate dataNascimento;
 
     public String getId() {
         return id;
@@ -51,5 +54,13 @@ public class AnimalDocument {
 
     public void setPeso(double peso) {
         this.peso = peso;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 }

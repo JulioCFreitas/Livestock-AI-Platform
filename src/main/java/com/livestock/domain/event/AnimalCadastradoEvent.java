@@ -2,20 +2,24 @@ package com.livestock.domain.event;
 
 import com.livestock.domain.enums.TipoGado;
 
+import java.time.LocalDate;
+
 public class AnimalCadastradoEvent {
 
     private String animalId;
     private String identificacao;
     private TipoGado tipo;
     private Double peso;
+    private LocalDate dataNascimento;
 
     public AnimalCadastradoEvent() {}
 
-    public AnimalCadastradoEvent(String animalId, String identificacao, TipoGado tipo, Double peso) {
+    public AnimalCadastradoEvent(String animalId, String identificacao, TipoGado tipo, Double peso, LocalDate dataNascimento) {
         this.animalId = animalId;
         this.identificacao = identificacao;
         this.tipo = tipo;
         this.peso = peso;
+        this.dataNascimento = dataNascimento;
     }
 
     public String getAnimalId() {
@@ -48,6 +52,14 @@ public class AnimalCadastradoEvent {
 
     public void setPeso(Double peso) {
         this.peso = peso;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 }
 

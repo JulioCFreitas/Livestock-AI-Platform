@@ -22,7 +22,8 @@ public class AnimalEventConsumer {
                 event.getAnimalId(),
                 event.getIdentificacao(),
                 event.getTipo(),
-                event.getPeso()
+                event.getPeso(),
+                event.getDataNascimento()
         );
 
         repository.save(readModel);
