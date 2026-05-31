@@ -69,4 +69,8 @@ public class Usuario {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
+
+    public void ativar() {
+        this.ativo = true;
+    }
 }

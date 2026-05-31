@@ -2,6 +2,7 @@ package com.livestock.application.service;
 
 import com.livestock.adapters.in.web.dto.AuthResponse;
 import com.livestock.adapters.in.web.dto.RegisterRequest;
+import com.livestock.adapters.out.mapper.UsuarioMapper;
 import com.livestock.application.ports.UsuarioRepository;
 import com.livestock.domain.model.Usuario;
 import org.springframework.stereotype.Service;
@@ -10,22 +11,19 @@ import org.springframework.stereotype.Service;
 public class UsuarioService {
 
     private final UsuarioRepository repository;
+    private final UsuarioMapper mapper;
 
-    public UsuarioService( UsuarioRepository repository) {
+    public UsuarioService( UsuarioRepository repository, UsuarioMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     public AuthResponse cadastrar(RegisterRequest request) {
         if (repository.ExistsByEmail(request.email()))
             throw new RuntimeException("Usuário já cadastrado.");
 
-        Usuario usuario = new Usuario();
-        usuario.setNome(request.nome());
-        usuario.setEmail(request.email());
-        usuario.setSenha(request.senha());
-        usuario.setRole(request.role());
-        usuario.setAtivo(true);
-
+        Usuario usuario = mapper.toDomain(request);
+        usuario.ativar();
         repository.save(usuario);
 
         return new AuthResponse("Usuário cadastrado com sucesso.");
