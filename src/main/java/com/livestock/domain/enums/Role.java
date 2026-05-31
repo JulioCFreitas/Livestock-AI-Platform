@@ -6,5 +6,5 @@ public enum Role {
     GERENTE,
     VETERINARIO,
     OPERADOR
-    
+
 }
