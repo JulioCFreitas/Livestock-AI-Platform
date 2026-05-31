@@ -1,6 +1,5 @@
 package com.livestock.adapters.out.persistence;
 
-import com.livestock.adapters.in.web.dto.AnimalResponse;
 import com.livestock.adapters.out.mapper.AnimalMapper;
 import com.livestock.application.ports.AnimalRepository;
 import com.livestock.domain.model.Animal;

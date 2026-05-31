@@ -2,10 +2,7 @@ package com.livestock.adapters.in.web;
 
 import com.livestock.adapters.in.web.dto.AnimalRequest;
 import com.livestock.adapters.in.web.dto.AnimalResponse;
-import com.livestock.adapters.out.mapper.AnimalMapper;
-import com.livestock.application.ports.AnimalRepository;
 import com.livestock.application.usecase.CadastrarAnimalUseCase;
-import com.livestock.domain.model.Animal;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

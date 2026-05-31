@@ -1,6 +1,5 @@
 package com.livestock.application.ports;
 
-import com.livestock.adapters.in.web.dto.AnimalResponse;
 import com.livestock.domain.model.Animal;
 import java.util.List;
 import java.util.Optional;
