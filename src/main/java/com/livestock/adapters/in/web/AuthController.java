@@ -3,6 +3,7 @@ package com.livestock.adapters.in.web;
 import com.livestock.adapters.in.web.dto.AuthResponse;
 import com.livestock.adapters.in.web.dto.RegisterRequest;
 import com.livestock.application.service.UsuarioService;
+import com.livestock.application.usecase.UsuarioUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final UsuarioService service;
+    private final UsuarioUseCase useCase;
 
-    public AuthController(UsuarioService service) {
-        this.service = service;
+    public AuthController(UsuarioUseCase useCase) {
+        this.useCase = useCase;
     }
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(service.cadastrar(request));
+                .body(useCase.cadastrar(request));
     }
 }

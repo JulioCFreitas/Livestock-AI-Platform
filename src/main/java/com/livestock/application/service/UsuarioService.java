@@ -4,11 +4,12 @@ import com.livestock.adapters.in.web.dto.AuthResponse;
 import com.livestock.adapters.in.web.dto.RegisterRequest;
 import com.livestock.adapters.out.mapper.UsuarioMapper;
 import com.livestock.application.ports.UsuarioRepository;
+import com.livestock.application.usecase.UsuarioUseCase;
 import com.livestock.domain.model.Usuario;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements UsuarioUseCase {
 
     private final UsuarioRepository repository;
     private final UsuarioMapper mapper;
@@ -18,7 +19,9 @@ public class UsuarioService {
         this.mapper = mapper;
     }
 
+    @Override
     public AuthResponse cadastrar(RegisterRequest request) {
+
         if (repository.ExistsByEmail(request.email()))
             throw new RuntimeException("Usuário já cadastrado.");
 
@@ -28,4 +31,6 @@ public class UsuarioService {
 
         return new AuthResponse("Usuário cadastrado com sucesso.");
     }
+
+
 }
